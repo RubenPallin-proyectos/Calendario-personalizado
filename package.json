@@ -1,0 +1,9 @@
+{
+  "name": "dias",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "test": "node --test"
+  }
+}

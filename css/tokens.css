@@ -1,0 +1,87 @@
+/* Días · tokens de diseño. Colores, tipografías, radios y sombras viven solo aquí. */
+
+@font-face {
+  font-family: 'Fraunces';
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/fraunces-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Figtree';
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('../fonts/figtree-latin-wght-normal.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Tipografía */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-ui: 'Figtree', -apple-system, system-ui, sans-serif;
+
+  /* Texto sobre la foto */
+  --ink: #ffffff;
+  --ink-2: rgba(255, 255, 255, 0.72);
+  --ink-3: rgba(255, 255, 255, 0.45);
+  --ink-dark: #17161d;
+
+  /* Cristal */
+  --glass: rgba(18, 18, 28, 0.34);
+  --glass-strong: rgba(22, 21, 32, 0.86);
+  --glass-hover: rgba(255, 255, 255, 0.12);
+  --glass-line: rgba(255, 255, 255, 0.16);
+  --glass-line-strong: rgba(255, 255, 255, 0.32);
+  --blur: blur(22px) saturate(150%);
+  --blur-strong: blur(34px) saturate(160%);
+
+  --accent: #ffd27a;
+  --today: #ff3b30;
+  --cross: #ff453a;
+  --sep: rgba(255, 255, 255, 0.16);
+  --bar: rgba(10, 10, 14, 0.55);
+  --alt: rgba(255, 255, 255, 0.05);
+
+  /* Rotuladores del modo edición */
+  --pen-1: #ff453a;
+  --pen-2: #ffd60a;
+  --pen-3: #30d158;
+  --pen-4: #0a84ff;
+  --pen-5: #bf5af2;
+  --pen-6: #ffffff;
+  --rainbow: conic-gradient(#ff6b6b, #ffc145, #4cd7a0, #3cc7e6, #9b7bff, #ff6fb5, #ff6b6b);
+  --danger: #ff7b7b;
+  --strike: rgba(255, 255, 255, 0.62);
+  --scrim: rgba(0, 0, 0, 0.42);
+  --shade-top: rgba(0, 0, 0, 0.45);
+  --shade-bottom: rgba(0, 0, 0, 0.55);
+  --text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+
+  /* Radios */
+  --r-xl: 30px;
+  --r-lg: 22px;
+  --r-md: 14px;
+  --r-pill: 999px;
+
+  /* Sombras */
+  --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --shadow-sheet: 0 -20px 60px rgba(0, 0, 0, 0.45);
+  --shadow-today: 0 0 0 2px var(--ink), 0 0 22px rgba(255, 255, 255, 0.55);
+
+  /* Movimiento */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Fondos por defecto de cada mes (hasta que haya foto) */
+  --m0: linear-gradient(160deg, #1d2b4f, #4a6fa5 55%, #c9d6ea);
+  --m1: linear-gradient(160deg, #3b1f4a, #a2456e 55%, #f2b5c4);
+  --m2: linear-gradient(160deg, #1f3d2b, #4f8a5b 55%, #d6e8a8);
+  --m3: linear-gradient(160deg, #2b3b5c, #7aa6c2 55%, #f4d9e4);
+  --m4: linear-gradient(160deg, #2e4a2a, #8cbf5f 55%, #fbe7a1);
+  --m5: linear-gradient(160deg, #0f4c5c, #2fa4b0 55%, #ffe29a);
+  --m6: linear-gradient(160deg, #0b3a66, #1f8fd1 55%, #ffd1a1);
+  --m7: linear-gradient(160deg, #5a1f1f, #e0703f 55%, #ffd27a);
+  --m8: linear-gradient(160deg, #3d2b1a, #b0773a 55%, #f1d39b);
+  --m9: linear-gradient(160deg, #2a1a12, #a3472a 55%, #f0a868);
+  --m10: linear-gradient(160deg, #1b1b2e, #5b4a7a 55%, #c9a48f);
+  --m11: linear-gradient(160deg, #0d1b2a, #2c4a6e 55%, #e8eef5);
+}
