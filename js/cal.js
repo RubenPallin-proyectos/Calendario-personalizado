@@ -3,7 +3,7 @@
 export const SHAPES = ['circle', 'square', 'diamond', 'star', 'triangle', 'heart', 'underline', 'dot'];
 export const STYLES = ['fill', 'outline'];
 export const PALETTE = ['#FF6B6B', '#FF8A4C', '#FFC145', '#B8E05A', '#4CD7A0', '#3CC7E6',
-  '#5B8CFF', '#9B7BFF', '#E26BFF', '#FF6FB5', '#FFFFFF'];
+  '#5B8CFF', '#9B7BFF', '#E26BFF', '#FF6FB5', '#8E8E93'];
 export const NOTE_MAX = 500;
 export const NAME_MAX = 24;
 
@@ -116,7 +116,7 @@ export function parseBackup(obj) {
   const s = obj.settings ?? {};
   const settings = {
     strike: s.strike !== false,
-    shade: typeof s.shade === 'number' ? Math.min(0.8, Math.max(0, s.shade)) : 0.45,
+    shade: typeof s.shade === 'number' ? Math.min(0.8, Math.max(0, s.shade)) : 0.15,
     view: s.view === 'month' ? 'month' : 'scroll',
   };
   const drawings = [];

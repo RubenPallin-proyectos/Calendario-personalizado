@@ -1,5 +1,5 @@
 // Días · service worker: guarda la app para que funcione sin conexión.
-const VERSION = 'dias-v3';
+const VERSION = 'dias-v4';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest',
   'css/tokens.css', 'css/app.css',

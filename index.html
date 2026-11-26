@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#0e0e11" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#efede9" media="(prefers-color-scheme: light)">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -25,33 +26,41 @@
     <div class="bg-shade" id="bgShade"></div>
   </div>
 
-  <main class="app" id="app">
+  <main class="app" id="app" data-view="scroll">
     <header class="top">
       <div class="top-row">
-        <span class="year-pill" id="year"></span>
+        <div class="year-pill">
+          <button class="yr-btn" id="prevM" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <span id="year"></span>
+          <button class="yr-btn" id="nextM" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
         <div class="pill-group">
           <button class="pg-btn" id="viewBtn" type="button"></button>
-          <button class="pg-btn" id="editBtn" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
-          </button>
-          <button class="pg-btn" id="settingsBtn" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
-          </button>
+          <button class="pg-btn" id="photoBtn" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3V19H4z"/><circle cx="12" cy="13.5" r="3.3"/></svg></button>
+          <button class="pg-btn" id="editBtn" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg></button>
+          <button class="pg-btn" id="settingsBtn" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
         </div>
       </div>
-      <h1 class="month-title" id="monthName"></h1>
-      <div class="weekdays" id="weekdays"></div>
+      <div class="hero-foot">
+        <div class="title-row">
+          <h1 class="month-title" id="monthName"></h1>
+        </div>
+        <div class="summary" id="summary"></div>
+      </div>
     </header>
 
-    <div class="scroller pad" id="scroller"></div>
-    <div class="month-view pad" id="monthView" hidden></div>
+    <section class="cal-sheet">
+      <div class="weekdays" id="weekdays"></div>
+      <div class="scroller pad" id="scroller"></div>
+      <div class="month-view pad" id="monthView" hidden></div>
+    </section>
 
     <footer class="dock">
       <div class="legend" id="legend" hidden></div>
       <div class="dock-row">
         <button class="pill" id="todayBtn" type="button"></button>
         <button class="pill pill-icon" id="markBtn" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/><circle cx="8" cy="8" r="1.6"/></svg>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/><circle cx="8" cy="8" r="1.6"/></svg>
           <span id="markLabel"></span>
         </button>
       </div>
@@ -59,26 +68,22 @@
   </main>
 
   <section class="editor" id="editor" hidden>
-    <header class="top">
+    <header class="ed-top">
       <div class="top-row">
         <span class="year-pill" id="edYear"></span>
         <div class="pill-group">
-          <button class="pg-btn" id="edUndo" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
-          </button>
-          <button class="pg-btn" id="edClear" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
-          </button>
+          <button class="pg-btn" id="edUndo" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+          <button class="pg-btn" id="edClear" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
         </div>
         <button class="pill pill-light pill-sm" id="edDone" type="button"></button>
       </div>
       <div class="ed-title-row">
-        <button class="nav-btn" id="edPrev" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <h1 class="month-title" id="edTitle"></h1>
-        <button class="nav-btn" id="edNext" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="nav-btn" id="edPrev" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <h1 class="ed-title" id="edTitle"></h1>
+        <button class="nav-btn" id="edNext" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="weekdays" id="edWeekdays"></div>
     </header>
+    <div class="weekdays" id="edWeekdays"></div>
     <div class="ed-stage pad" id="edStage"></div>
     <footer class="ed-tools">
       <div class="pens" id="pens"></div>

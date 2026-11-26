@@ -14,48 +14,59 @@
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* Tipografía */
   --font-display: 'Fraunces', ui-serif, Georgia, serif;
   --font-ui: 'Figtree', -apple-system, system-ui, sans-serif;
 
-  /* Texto sobre la foto */
-  --ink: #ffffff;
-  --ink-2: rgba(255, 255, 255, 0.72);
-  --ink-3: rgba(255, 255, 255, 0.45);
-  --ink-dark: #17161d;
+  /* Sobre la foto (siempre claro, da igual el tema) */
+  --hero-ink: #ffffff;
+  --hero-glass: rgba(16, 16, 20, 0.34);
+  --hero-line: rgba(255, 255, 255, 0.26);
+  --hero-shadow: 0 2px 28px rgba(0, 0, 0, 0.4);
+  --scrim-top: rgba(0, 0, 0, 0.45);
+  --scrim-bottom: rgba(0, 0, 0, 0.2);
+  --shade-base: #000000;
 
-  /* Cristal */
-  --glass: rgba(18, 18, 28, 0.34);
-  --glass-strong: rgba(22, 21, 32, 0.86);
-  --glass-hover: rgba(255, 255, 255, 0.12);
-  --glass-line: rgba(255, 255, 255, 0.16);
-  --glass-line-strong: rgba(255, 255, 255, 0.32);
-  --blur: blur(22px) saturate(150%);
-  --blur-strong: blur(34px) saturate(160%);
+  /* Hoja del calendario y superficies (cambian con el tema) */
+  --sheet-rgb: 251 250 248;
+  --sheet-a-month: 0.97;
+  --sheet-a-scroll: 0.82;
+  --surface: #ffffff;
+  --surface-2: #efede9;
+  --float: rgba(255, 255, 255, 0.88);
+  --scrim: rgba(12, 12, 16, 0.4);
 
-  --accent: #ffd27a;
-  --today: #ff3b30;
-  --cross: #ff453a;
-  --sep: rgba(255, 255, 255, 0.16);
-  --bar: rgba(10, 10, 14, 0.55);
-  --alt: rgba(255, 255, 255, 0.05);
+  --ink: #1b1b1f;
+  --ink-2: rgba(27, 27, 31, 0.62);
+  --ink-3: rgba(27, 27, 31, 0.4);
+  --ink-inv: #ffffff;
+  --on-light: #1b1b1f;
+  --on-dark: #ffffff;
+  --line: rgba(27, 27, 31, 0.09);
+  --line-strong: rgba(27, 27, 31, 0.2);
+  --fill: rgba(27, 27, 31, 0.05);
+  --fill-2: rgba(27, 27, 31, 0.1);
+  --alt: rgba(27, 27, 31, 0.035);
+
+  --today-bg: var(--ink);
+  --today-ink: var(--ink-inv);
+  --cross: #e5372c;
+  --note: #f2a33a;
+  --danger: #d92d20;
+  --ok: #30b455;
+  --rainbow: conic-gradient(#ff6b6b, #ffc145, #4cd7a0, #3cc7e6, #9b7bff, #ff6fb5, #ff6b6b);
+  --blur: blur(18px) saturate(160%);
+  --blur-sheet: blur(32px) saturate(170%);
 
   /* Rotuladores del modo edición */
   --pen-1: #ff453a;
-  --pen-2: #ffd60a;
-  --pen-3: #30d158;
+  --pen-2: #ffb800;
+  --pen-3: #30c24f;
   --pen-4: #0a84ff;
-  --pen-5: #bf5af2;
-  --pen-6: #ffffff;
-  --rainbow: conic-gradient(#ff6b6b, #ffc145, #4cd7a0, #3cc7e6, #9b7bff, #ff6fb5, #ff6b6b);
-  --danger: #ff7b7b;
-  --strike: rgba(255, 255, 255, 0.62);
-  --scrim: rgba(0, 0, 0, 0.42);
-  --shade-top: rgba(0, 0, 0, 0.45);
-  --shade-bottom: rgba(0, 0, 0, 0.55);
-  --text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+  --pen-5: #af52de;
+  --pen-6: #8e8e93;
 
   /* Radios */
   --r-xl: 30px;
@@ -64,14 +75,14 @@
   --r-pill: 999px;
 
   /* Sombras */
-  --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  --shadow-sheet: 0 -20px 60px rgba(0, 0, 0, 0.45);
-  --shadow-today: 0 0 0 2px var(--ink), 0 0 22px rgba(255, 255, 255, 0.55);
+  --shadow-up: 0 -10px 40px rgba(0, 0, 0, 0.18);
+  --shadow-float: 0 6px 22px rgba(0, 0, 0, 0.16);
+  --shadow-sheet: 0 -16px 60px rgba(0, 0, 0, 0.3);
 
   /* Movimiento */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Fondos por defecto de cada mes (hasta que haya foto) */
+  /* Fondos de cada mes mientras no haya foto */
   --m0: linear-gradient(160deg, #1d2b4f, #4a6fa5 55%, #c9d6ea);
   --m1: linear-gradient(160deg, #3b1f4a, #a2456e 55%, #f2b5c4);
   --m2: linear-gradient(160deg, #1f3d2b, #4f8a5b 55%, #d6e8a8);
@@ -84,4 +95,56 @@
   --m9: linear-gradient(160deg, #2a1a12, #a3472a 55%, #f0a868);
   --m10: linear-gradient(160deg, #1b1b2e, #5b4a7a 55%, #c9a48f);
   --m11: linear-gradient(160deg, #0d1b2a, #2c4a6e 55%, #e8eef5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --sheet-rgb: 21 21 25;
+    --sheet-a-month: 0.96;
+    --sheet-a-scroll: 0.78;
+    --surface: #1c1c21;
+    --surface-2: #0e0e11;
+    --float: rgba(36, 36, 42, 0.86);
+    --scrim: rgba(0, 0, 0, 0.55);
+    --ink: #f4f4f6;
+    --ink-2: rgba(244, 244, 246, 0.64);
+    --ink-3: rgba(244, 244, 246, 0.4);
+    --ink-inv: #141418;
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.22);
+    --fill: rgba(255, 255, 255, 0.07);
+    --fill-2: rgba(255, 255, 255, 0.13);
+    --alt: rgba(255, 255, 255, 0.035);
+    --cross: #ff5a4f;
+    --danger: #ff6b61;
+    --shadow-up: 0 -10px 40px rgba(0, 0, 0, 0.4);
+    --shadow-float: 0 6px 22px rgba(0, 0, 0, 0.4);
+    --shadow-sheet: 0 -16px 60px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --sheet-rgb: 21 21 25;
+  --sheet-a-month: 0.96;
+  --sheet-a-scroll: 0.78;
+  --surface: #1c1c21;
+  --surface-2: #0e0e11;
+  --float: rgba(36, 36, 42, 0.86);
+  --scrim: rgba(0, 0, 0, 0.55);
+  --ink: #f4f4f6;
+  --ink-2: rgba(244, 244, 246, 0.64);
+  --ink-3: rgba(244, 244, 246, 0.4);
+  --ink-inv: #141418;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --fill: rgba(255, 255, 255, 0.07);
+  --fill-2: rgba(255, 255, 255, 0.13);
+  --alt: rgba(255, 255, 255, 0.035);
+  --cross: #ff5a4f;
+  --danger: #ff6b61;
+  --shadow-up: 0 -10px 40px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 6px 22px rgba(0, 0, 0, 0.4);
+  --shadow-sheet: 0 -16px 60px rgba(0, 0, 0, 0.6);
 }

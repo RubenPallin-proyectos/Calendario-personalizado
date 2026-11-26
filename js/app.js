@@ -4,7 +4,7 @@
 import { T } from './i18n.js';
 import * as db from './store.js';
 import {
-  SHAPES, PALETTE, NOTE_MAX, NAME_MAX, keyOf, todayKey, monthKeyOf, parseKey, monthGrid, isPast,
+  SHAPES, PALETTE, NOTE_MAX, NAME_MAX, keyOf, todayKey, monthKeyOf, monthStats, parseKey, monthGrid, isPast,
   shiftMonth, textOn, normalizeType, normalizeDay, normalizeStrokes, parseBackup, uid,
 } from './cal.js';
 import { shapeSVG, isBackdrop, CROSS_SVG } from './shapes.js';
@@ -14,16 +14,16 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
 const ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
 const ICON_BACK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
 const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
-const ICON_MONTH = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 3v3M16 3v3"/></svg>';
-const ICON_LIST = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
-const ICON_ERASER = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12M5.5 14.5l8-8a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L12 18H8.5z"/></svg>';
+const ICON_MONTH = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 3v3M16 3v3"/></svg>';
+const ICON_LIST = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+const ICON_ERASER = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12M5.5 14.5l8-8a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L12 18H8.5z"/></svg>';
 
 const DEFAULT_TYPES = [
   { id: 'work', name: T.defaultTypes.work, color: '#FF8A4C', shape: 'circle', style: 'fill' },
   { id: 'off', name: T.defaultTypes.off, color: '#4CD7A0', shape: 'circle', style: 'outline' },
   { id: 'holiday', name: T.defaultTypes.holiday, color: '#FFC145', shape: 'star', style: 'fill' },
 ];
-const DEFAULT_SETTINGS = { strike: true, shade: 0.45, view: 'scroll' };
+const DEFAULT_SETTINGS = { strike: true, shade: 0.15, view: 'scroll' };
 const DRAW_PREFIX = 'draw:';
 
 const now = new Date();
@@ -136,6 +136,7 @@ function refreshCell(key, pop) {
     if (pop) fresh.classList.add('pop');
     el.replaceWith(fresh);
   });
+  renderSummary();
 }
 
 /* ── Vista mes a mes ───────────────────────────────── */
@@ -144,10 +145,8 @@ function refreshCell(key, pop) {
 function monthHTML(year, month) {
   const cells = monthGrid(year, month);
   while (cells.at(-1) === null) cells.pop();
-  const lead = cells.findIndex(Boolean);
   const ym = monthKeyOf(year, month);
   return `<section class="month" data-ym="${ym}" data-y="${year}" data-m="${month}">
-    <div class="m-head"><span class="${isCurrentMonth(year, month) ? 'current' : ''}" style="grid-column:${lead + 1}">${T.monthsShort[month]}</span></div>
     <div class="m-grid">${cells.map((c) => (c ? dayCellHTML(c) : '<span></span>')).join('')}</div>
     ${state.drawings.get(ym)?.length ? `<canvas class="ink" data-ink="${ym}"></canvas>` : ''}
   </section>`;
@@ -202,7 +201,6 @@ function placeInks() {
   weeks.querySelectorAll('canvas.ink').forEach((c) => c.remove());
   const rowH = weeks.querySelector('.week')?.offsetHeight ?? 0;
   if (!rowH) return;
-  const headH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--head-h')) || 40;
   for (const [ym, strokes] of state.drawings) {
     if (!strokes.length) continue;
     const [y, m] = ym.split('-').map(Number);
@@ -212,7 +210,7 @@ function placeInks() {
     const c = document.createElement('canvas');
     c.className = 'ink';
     c.dataset.ink = ym;
-    c.style.cssText = `inset:auto;left:0;top:${cell.parentElement.offsetTop - headH}px;height:${headH + rows * rowH}px`;
+    c.style.cssText = `inset:auto;left:0;top:${cell.parentElement.offsetTop}px;height:${rows * rowH}px`;
     weeks.append(c);
     drawStrokes(c, strokes);
   }
@@ -285,17 +283,26 @@ function paintInks(root) {
 
 const isScroll = () => state.settings.view === 'scroll';
 
+function renderSummary() {
+  const stats = monthStats(state.days, state.visible.year, state.visible.month);
+  $('summary').innerHTML = state.types.filter((t) => stats[t.id])
+    .map((t) => `<span class="sum">${shapeSVG({ ...t, shape: isBackdrop(t.shape) ? t.shape : 'circle', style: 'fill' })}<b>${stats[t.id]}</b> ${esc(t.name)}</span>`)
+    .join('');
+}
+
 function renderTitle() {
   const t = $('monthName');
   t.textContent = T.months[state.visible.month];
   t.classList.remove('swap'); void t.offsetWidth; t.classList.add('swap');
   $('year').textContent = state.visible.year;
+  renderSummary();
 }
 
 /** Vuelve a pintar la vista activa sin mover lo que se ve. */
 function renderAll() {
   state.today = todayKey();
   const scroll = isScroll();
+  $('app').dataset.view = scroll ? 'scroll' : 'month';
   $('scroller').hidden = !scroll;
   $('monthView').hidden = scroll;
   const vb = $('viewBtn');
@@ -503,7 +510,7 @@ function renderLegend() {
   $('legend').hidden = !state.marking;
   $('markBtn').setAttribute('aria-pressed', state.marking);
   $('markLabel').textContent = state.marking ? T.done : T.markMode;
-  $('scroller').classList.toggle('marking', state.marking && !!state.paint);
+  for (const id of ['scroller', 'monthView']) $(id).classList.toggle('marking', state.marking && !!state.paint);
   if (!state.marking) return;
   $('legend').innerHTML = state.types
     .map((t) => `<button type="button" class="chip" data-type="${t.id}" aria-pressed="${state.paint === t.id}">${shapeSVG(t)}${esc(t.name)}</button>`)
@@ -821,7 +828,7 @@ $('photoInput').addEventListener('change', async (e) => {
     state.photos.set(photoMonth, URL.createObjectURL(blob));
     db.persist();
     if (photoMonth === state.visible.month) { shownBg = null; renderBackground(); }
-    openSettings();
+    if (!$('sheetWrap').hidden) openSettings();
   } catch {
     toast(T.photoError);
   }
@@ -916,6 +923,9 @@ function toast(msg) {
 function bindEvents() {
   $('todayBtn').addEventListener('click', goToday);
   $('viewBtn').addEventListener('click', toggleView);
+  $('prevM').addEventListener('click', () => goMonth(-1));
+  $('nextM').addEventListener('click', () => goMonth(1));
+  $('photoBtn').addEventListener('click', () => pickPhoto(state.visible.month));
   $('settingsBtn').addEventListener('click', openSettings);
   $('editBtn').addEventListener('click', openEditor);
   $('scrim').addEventListener('click', closeSheet);
@@ -1029,6 +1039,9 @@ function staticTexts() {
   $('edClear').setAttribute('aria-label', T.clearDrawing);
   $('edPrev').setAttribute('aria-label', T.prev);
   $('edNext').setAttribute('aria-label', T.next);
+  $('prevM').setAttribute('aria-label', T.prev);
+  $('nextM').setAttribute('aria-label', T.next);
+  $('photoBtn').setAttribute('aria-label', T.photoChange);
   $('todayBtn').textContent = T.today;
   $('edDone').textContent = T.done;
 }

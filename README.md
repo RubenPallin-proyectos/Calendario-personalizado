@@ -23,7 +23,7 @@ Una vez instalada funciona sin conexión y los datos quedan solo en el móvil.
 
 ## Estructura
     index.html · manifest.webmanifest · sw.js
-    css/tokens.css   colores, radios, sombras, tipografías y fondos por defecto de cada mes
+    css/tokens.css   colores (tema claro y oscuro), radios, sombras, tipografías y fondos por defecto de cada mes
     css/app.css      estilos (solo var(--...))
     js/app.js        interfaz
     js/cal.js        lógica pura (rejilla, validación, copia)  ← tests en tests/

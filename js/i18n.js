@@ -24,6 +24,7 @@ export const T = {
   notePlaceholder: 'Escribe lo que quieras recordar…',
 
   markMode: 'Marcar',
+  photoChange: 'Cambiar la foto de este mes',
   viewMonth: 'Ver mes a mes',
   viewScroll: 'Ver los meses seguidos',
   edit: 'Modo edición: dibujar a mano',
